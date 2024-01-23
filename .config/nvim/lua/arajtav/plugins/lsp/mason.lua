@@ -24,5 +24,6 @@ mason_lspconfig.setup({
         "sqls",
         "tailwindcss",
         "tsserver",
+        "gopls",
     },
 })

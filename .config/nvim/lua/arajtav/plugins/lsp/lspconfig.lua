@@ -80,6 +80,11 @@ lspconfig["tailwindcss"].setup({
     on_attach = on_attach,
 })
 
+lspconfig["gopls"].setup({
+    capabilities=capabilities,
+    on_attach = on_attach,
+})
+
 typescript.setup({
     server = {
         capabilities = capabilities,
