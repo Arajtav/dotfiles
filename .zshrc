@@ -10,6 +10,7 @@ autoload -Uz compinit
 compinit
 
 # colors
+alias lf="ls --color=never"
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
@@ -29,17 +30,39 @@ alias :q="exit"
 # git stuff
 alias gs="git status"
 alias gd="git diff"
+alias gw="git diff --word-diff"
 alias gb="git branch"
-alias gc="git checkout" # its not git commit to slow me down. I need to think before commits, otherwise i would do something dumb
+alias gc="git checkout" # it`s not git commit to slow me down. I need to think before commits, otherwise I would do something dumb. (I commit dumb things anyway, that`s why I dont even have alias for push)
 alias gp="git pull"
 
 # npm stuff
 alias npi="npm i"
 alias npl="npm ls"
 alias nprd="npm run dev"
+alias npr="npm run"
+alias npbs="npm run build && npm run start"
+
+# go stuff
+alias gr="go run"
 
 # other
 alias iw="iwctl"
+alias ff="fzf"
+alias hyprexit="hyprctl dispatch exit"
+alias iss="gh issue list"
+alias fsz="du -s * | sort -n"
+alias at="tmux attach"
+alias force="GOPROXY=direct"
+
+# wf-recorder
+alias srecord="wf-recorder -a -r 60"
 
 # making gpg work so i can sign commits
 export GPG_TTY=$(tty)
+
+# usefull commands
+ntmp() {
+    number=$RANDOM
+    mkdir /tmp/$number
+    (cd /tmp/$number && zsh)
+}
