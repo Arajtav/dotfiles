@@ -11,7 +11,7 @@ compinit
 
 # colors
 alias lf="ls --color=never"
-alias ls="ls --color=auto"
+alias ls="ls -v --color=auto"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias cmatrix="cmatrix -C cyan"
@@ -23,6 +23,7 @@ alias n="nano"
 alias v="nvim"
 alias c="cat"
 alias cl="clear"
+alias cls="clear && ls"
 
 # too much neovim
 alias :q="exit"
@@ -34,6 +35,7 @@ alias gw="git diff --word-diff"
 alias gb="git branch"
 alias gc="git checkout" # it`s not git commit to slow me down. I need to think before commits, otherwise I would do something dumb. (I commit dumb things anyway, that`s why I dont even have alias for push)
 alias gp="git pull"
+alias gu="git remote show origin | grep 'URL'" # it's useful I swear
 
 # npm stuff
 alias npi="npm i"
@@ -65,4 +67,21 @@ ntmp() {
     number=$RANDOM
     mkdir /tmp/$number
     (cd /tmp/$number && zsh)
+}
+
+h() {
+    $(cat $HISTFILE | fzf)
+}
+
+cdl() {
+    B=$(ls -1)
+    if [ -z "{$B}" ]; then
+        return
+    fi
+
+    A=$(echo $B | fzf)
+    if [[ "${A}" =~ '^[[:space:]]*$' ]]; then
+        return
+    fi
+    cd $A && cdl
 }
