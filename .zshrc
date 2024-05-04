@@ -35,7 +35,8 @@ alias gw="git diff --word-diff"
 alias gb="git branch"
 alias gc="git checkout" # it`s not git commit to slow me down. I need to think before commits, otherwise I would do something dumb. (I commit dumb things anyway, that`s why I dont even have alias for push)
 alias gp="git pull"
-alias gu="git remote show origin | grep 'URL'" # it's useful I swear
+alias gu="git remote show origin | grep 'URL'"
+alias gt="git log --oneline | wc -l"
 
 # npm stuff
 alias npi="npm i"
@@ -50,14 +51,14 @@ alias gr="go run"
 # other
 alias iw="iwctl"
 alias ff="fzf"
-alias hyprexit="hyprctl dispatch exit"
-alias iss="gh issue list"
-alias fsz="du -s * | sort -n"
+alias hyprexit="sync && hyprctl dispatch exit"
+alias is="gh issue list"
+alias fs="du -s * | sort -n"
 alias at="tmux attach"
 alias force="GOPROXY=direct"
 
 # wf-recorder
-alias srecord="wf-recorder -a -r 60"
+alias record="wf-recorder -a -B 60 -c av1_vaapi -D"
 
 # making gpg work so i can sign commits
 export GPG_TTY=$(tty)
@@ -70,17 +71,14 @@ ntmp() {
 }
 
 h() {
-    $(cat $HISTFILE | fzf)
+    $(cat $HISTFILE | fzf +s)
 }
 
 cdl() {
-    B=$(ls -1)
-    if [ -z "{$B}" ]; then
-        return
-    fi
-
-    A=$(echo $B | fzf)
+    A=$(echo -e "$(ls -1t --color=never)\n.." | fzf +s)
+    # var is empty if you do something like ctrl+c or ctrl+d in fzf
     if [[ "${A}" =~ '^[[:space:]]*$' ]]; then
+        ls
         return
     fi
     cd $A && cdl
