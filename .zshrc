@@ -74,6 +74,10 @@ h() {
     $(cat $HISTFILE | fzf +s)
 }
 
+p() {
+    basename $(pwd)
+}
+
 cdl() {
     A=$(echo -e "$(ls -1t --color=never)\n.." | fzf +s)
     # var is empty if you do something like ctrl+c or ctrl+d in fzf
@@ -81,5 +85,11 @@ cdl() {
         ls
         return
     fi
-    cd $A && cdl
+    if [ -f "$A" ]; then
+        nvim $A && cdl;
+    elif [ -d "$A" ]; then
+        cd $A && cdl;
+    else
+        cdl;
+    fi
 }
