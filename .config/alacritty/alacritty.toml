@@ -1,9 +1,6 @@
-shell = "zsh"
-live_config_reload = true
-
 [window]
 padding = { x = 10, y = 10 }
-opacity = 0.9
+opacity = 0.75
 startup_mode = "Windowed"
 dynamic_title = true
 class = { instance = "Alacritty", general = "Term" }
@@ -12,9 +9,9 @@ class = { instance = "Alacritty", general = "Term" }
 history = 8196
 
 [font]
-normal = { family = "JetBrainsMonoNerdFontMono", style="Regular" }
-bold = { family = "JetBrainsMonoNerdFontMono", style="ExtraBold" }
-italic = { family = "JetBrainsMonoNerdFontMono", style="Italic" }
+normal = { family = "JetBrainsMono Nerd Font Mono", style="Regular" }
+bold = { family = "JetBrainsMono Nerd Font Mono", style="ExtraBold" }
+italic = { family = "JetBrainsMono Nerd Font Mono", style="Italic" }
 size = 11
 
 [colors]
@@ -26,9 +23,15 @@ blink_timeout = 15
 thickness = 0.25
 
 [keyboard]
-bindings = [{ key = "F", mods = "Alt|Control", action = "CreateNewWindow"}] # there is probably default bind for that already but i`m too lazy to search it
+bindings = [{ key = "F", mods = "Alt|Control", action = "CreateNewWindow"}] # there probably is a default bind for that already but i`m too lazy to search for it
 
 [debug]
 # render_timer = true
 persistent_logging = true
-# highlight_damage = true
+
+[general]
+live_config_reload = true
+
+[terminal]
+shell = "zsh"
+# highlight_damage = true # this is funny
