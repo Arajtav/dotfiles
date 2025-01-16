@@ -45,7 +45,7 @@ alias :qa="killall alacritty"
 alias gs="git status"
 alias gd="git diff"
 alias gw="git diff --word-diff"
-alias gb="git branch"
+alias gb="git branch --all"
 alias gc="git checkout" # it`s not git commit to slow me down. I need to think before commits, otherwise I would do something dumb. (I commit dumb things anyway, that`s why I dont even have alias for push)
 alias gp="git pull"
 alias gu="git remote show origin | grep 'URL'"
@@ -55,7 +55,6 @@ alias gds="git diff --stat"
 alias gwc="git whatchanged"
 
 # npm stuff
-alias npi="npm i"
 alias npl="npm ls"
 alias nprd="npm run dev"
 alias npr="npm run"
@@ -74,8 +73,10 @@ alias at="tmux attach"
 alias force="GOPROXY=direct"
 
 # gcc g++, TODO: maybe no -fbuiltin in gcc.
-alias bgcc="gcc -std=c23 -Wall -Wextra -pedantic -O2 -fexpensive-optimizations -fmove-loop-invariants -fsigned-char -fwhole-program -faggressive-loop-optimizations -fasm -fbuiltin -ftrack-macro-expansion"
+alias bgcc="gcc -std=c23 -Wall -Wextra -pedantic -O2 -fexpensive-optimizations -fmerge-constants -fmerge-all-constants -fmerge-debug-strings -fmove-loop-invariants -fsigned-char -fwhole-program -faggressive-loop-optimizations -fasm -fbuiltin"
+alias bzgcc="zig cc -std=c23 -Wall -Wextra -pedantic -O2 -fexpensive-optimizations -fsigned-char -fwhole-program -fasm -fbuiltin"
 alias sgcc="bgcc -fsanitize=address -fsanitize=bounds -fsanitize=enum -fsanitize=float-divide-by-zero -fsanitize=integer-divide-by-zero -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=unreachable"
+alias szgcc="bzgcc -fsanitize=address -fsanitize=bounds -fsanitize=enum -fsanitize=float-divide-by-zero -fsanitize=integer-divide-by-zero -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=unreachable"
 alias sg++="g++ -std=c23 -Wall -Wextra -pedantic -O2"
 
 # wf-recorder
@@ -102,7 +103,7 @@ p() {
 }
 
 cdl() {
-    A=$(echo -e "$(ls -1t --color=never)\n.." | fzf +s)
+    A=$(echo -e "$(ls -1t --color=never)\n..\n~" | fzf +s)
     # var is empty if you do something like ctrl+c or ctrl+d in fzf
     if [[ "${A}" =~ '^[[:space:]]*$' ]]; then
         ls
@@ -169,3 +170,27 @@ img_pal() {
 apple_album_metadata() {
     for d in ./*.albummetadata; do {echo "$d"; exiftool "$d" | grep "Objects  " | tail -c +35; echo ""; }; done;
 }
+
+view_csv() {
+    column -s, -t < $1 | less "-#2" -N -S
+}
+
+randomsi() {
+    head -c8 </dev/urandom|xxd -p -u | tr '[:upper:]' '[:lower:]'
+}
+
+npltb() {
+    npm run lint &&
+    npm run test &&
+    npm run build
+}
+
+wlsu() {
+    sudo --preserve-env=XDG_SESSION_TYPE --preserve-env=WAYLAND_DISPLAY --preserve-env=DISPLAY --preserve-env=XGD_BACKEND --preserve-env=XDG_RUNTIME_DIR --preserve-env=XDG_SESSION_TYPE -u $1 zsh
+}
+
+dir_all_png_to_webp() {
+    for img in *; do ffmpeg -i "$img" -c:v libwebp -lossless 1 "${img%.*}.webp"; done
+}
+
+export PATH="$PATH:/home/arajtav/.local/bin"
